@@ -53,33 +53,67 @@
         
         .status-text {
             font-size: 1.5em;
-            margin-right: 10px;
+            margin-left: 10px;
         }
         
         .status-indicator {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            animation: blink 1.5s infinite;
+            box-shadow: 0 0 5px;
         }
         
         .status-indicator.green {
             background-color: var(--color-green);
+            box-shadow: 0 0 5px var(--color-green);
+            animation: blinkGreen 2s infinite linear;
         }
         
         .status-indicator.orange {
             background-color: var(--color-orange);
+            box-shadow: 0 0 10px var(--color-orange);
+            animation: blinkOrange 2s infinite linear;
         }
         
         .status-indicator.red {
             background-color: var(--color-red);
+            box-shadow: 0 0 10px var(--color-red);
+            animation: blinkRed 2s infinite linear;
         }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+        @keyframes blinkGreen {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 20px var(--color-green);
+            }
+            50% {
+                opacity: 0.75;
+                box-shadow: 0 0 10px var(--color-green);
+            }
         }
-        
+
+        @keyframes blinkOrange {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 20px var(--color-orange);
+            }
+            50% {
+                opacity: 0.75;
+                box-shadow: 0 0 10px var(--color-orange);
+            }
+        }
+
+        @keyframes blinkRed {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 20px var(--color-red);
+            }
+            50% {
+                opacity: 0.75;
+                box-shadow: 0 0 10px var(--color-red);
+            }
+        }
+
         .services .service-box {
             border: 1px solid var(--color-border);
             border-radius: 0;
@@ -134,13 +168,14 @@
         
         .service-downtime {
             display: flex;
-            gap: 2px;
+            gap: 3px;
         }
         
         .service-downtime .day {
-            width: 2px;
-            height: 10px;
+            width: 4px;
+            height: 20px;
             background-color: var(--color-green);
+            border-radius: 1.5px;
         }
         
         .service-downtime .day.orange {
@@ -174,6 +209,33 @@
                 color: var(--color-text-dark);
             }
         }
+
+        @media (max-width: 950px) {
+            .service-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .service-status {
+                margin-bottom: 10px;
+                order: -1;
+            }
+
+            .service-percentage {
+                order: -1;
+            }
+
+            .service-name {
+                order: -1;
+            }
+
+            .service-downtime {
+                flex: none;
+                width: 100%;
+                justify-content: flex-start;
+                margin-top: 10px;
+            }
+        }
         
         @media (max-width: 768px) {
             .service-box {
@@ -190,7 +252,6 @@
                 height: 150px;
             }
         }
-
     </style>
 </head>
 <body>
@@ -198,20 +259,17 @@
         <section class="overall-status">
             <h1>Overall Status</h1>
             <div class="status">
+                <span class="status-indicator green" id="overall-status-indicator"></span>
                 <span class="status-text" id="overall-status-text">All Systems Operational</span>
-                <span class="status-indicator" id="overall-status-indicator"></span>
             </div>
         </section>
         
         <section class="services">
             <h2>Specific Services</h2>
             <div class="service-box first">
-                <div class="service-info">
-                    <div class="service-name">API</div>
-                    <div class="service-status operational">Operational</div>
-                </div>
+                <div class="service-name">API</div>
+                <div class="service-percentage">99.9%</div>
                 <div class="service-downtime">
-                    <!-- Simulated downtime data for each day -->
                     <div class="day green"></div>
                     <div class="day green"></div>
                     <div class="day green"></div>
@@ -302,25 +360,25 @@
                     <div class="day green"></div>
                     <div class="day green"></div>
                     <div class="day green"></div>
-                    <!-- Repeat for 90 days -->
                 </div>
+                <div class="service-status operational">Operational</div>
             </div>
             <div class="service-box">
-                <div class="service-name">Database</div>
-                <div class="service-status slow">Slow</div>
+                <div class="service-info">
+                    <div class="service-name">Database</div>
+                    <div class="service-status slow">Slow</div>
+                </div>
                 <div class="service-downtime">
-                    <!-- Simulated downtime data for each day -->
                     <div class="day orange"></div>
-                    <!-- Repeat for 90 days -->
                 </div>
             </div>
             <div class="service-box last">
-                <div class="service-name">Website</div>
-                <div class="service-status defect">Defect</div>
+                <div class="service-info">
+                    <div class="service-name">Website</div>
+                    <div class="service-status defect">Defect</div>
+                </div>
                 <div class="service-downtime">
-                    <!-- Simulated downtime data for each day -->
                     <div class="day red"></div>
-                    <!-- Repeat for 90 days -->
                 </div>
             </div>
         </section>
